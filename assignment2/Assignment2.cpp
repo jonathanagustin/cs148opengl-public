@@ -95,49 +95,46 @@ void Assignment2::SetupExample1()
     const std::string VERT_FILENAME = std::string(STRINGIFY(SHADER_PATH)) + "/hw2/hw2.vert";
     const std::string FRAG_FILENAME = std::string(STRINGIFY(SHADER_PATH)) + "/hw2/hw2.frag";
     
-    std::ifstream vShaderFile;
-    vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    std::ifstream vert_shader_file;
+    std::ifstream frag_shader_file;
     
-    std::ifstream fShaderFile;
-    fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    
-    std::string vertCode;
-    std::string fragCode;
+    std::string vert_code;
+    std::string frag_code;
     
     try {
         /* OPEN FILES */
-        vShaderFile.open(VERT_FILENAME);
-        fShaderFile.open(FRAG_FILENAME);
-        std::stringstream vShaderStream, fShaderStream;
+        vert_shader_file.open(VERT_FILENAME);
+        frag_shader_file.open(FRAG_FILENAME);
+        std::stringstream vert_stream, frag_stream;
         
         /* READ FILE BUFFER CONTENTS INTO STREAMS */
-        vShaderStream << vShaderFile.rdbuf();
-        fShaderStream << fShaderFile.rdbuf();
+        vert_stream << vert_shader_file.rdbuf();
+        frag_stream << frag_shader_file.rdbuf();
         
         /* CLOSE FILES */
-        vShaderFile.close();
-        fShaderFile.close();
+        vert_shader_file.close();
+        frag_shader_file.close();
         
         /* CONVERT STREAM INTO STRING */
-        vertCode = vShaderStream.str();
-        fragCode = fShaderStream.str();
+        vert_code = vert_stream.str();
+        frag_code = frag_stream.str();
         
     } catch (std::ifstream::failure e) {
         std::cout << "Error with file operations." << std::endl;
     }
     
     /* CONVERT TO C STRING */
-    const char* vShaderCode = vertCode.c_str();
-    const char * fShaderCode = fragCode.c_str();
+    const char* vert_shader_code = vert_code.c_str();
+    const char * frag_shader_code = frag_code.c_str();
     
     /* VERTEX SHADER */
     GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex, 1, &vShaderCode, NULL);
+    glShaderSource(vertex, 1, &vert_shader_code, NULL);
     glCompileShader(vertex);
     
     /* FRAGMENT SHADER */
     GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment, 1, &fShaderCode, NULL);
+    glShaderSource(fragment, 1, &frag_shader_code, NULL);
     glCompileShader(fragment);
     
     /* SHADER PROGRAM */
