@@ -21,6 +21,15 @@ protected:
     virtual void HandleWindowResize(float x, float y);
 
 private:
+    
+    GLuint program;
+    
+    GLuint vao;
+    
+    GLuint vertexbuffer;
+    
+    float time;
+    
     virtual void SetupScene();
 
     virtual void SetupExample1();
